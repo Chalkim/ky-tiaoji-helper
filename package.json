@@ -17,6 +17,7 @@
     "@ant-design/icons-vue": "^6.1.0",
     "ant-design-vue": "^3.1.0-rc.5",
     "axios": "^0.26.1",
+    "cli-color": "^2.0.2",
     "core-js": "^3.8.3",
     "electron": "^13.6.9",
     "electron-store": "^8.0.1",

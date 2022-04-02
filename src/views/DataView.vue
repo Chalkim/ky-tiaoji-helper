@@ -1,7 +1,7 @@
 <template>
   <a-table
     :columns="columns"
-    :data-source="this.$store.state.list"
+    :data-source="this.$store.state.queryResult"
     :pagination="{ pageSize: 20 }"
     bordered
     size="middle"
@@ -53,10 +53,11 @@
 import { computed, ref } from 'vue';
 import { schoolFilter } from '@/utils/filter';
 
+// const { ipcRenderer } = window.require('electron');
+
 export default {
   setup() {
     const filteredInfo = ref();
-
     const columns = computed(() => {
       const filtered = filteredInfo.value || {};
       return [

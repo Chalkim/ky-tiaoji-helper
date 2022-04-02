@@ -83,7 +83,7 @@ export default defineComponent({
               list.push(vos[i]);
             }
           });
-          this.$store.commit('setList', list.map((item) => {
+          this.$store.commit('setQueryResult', list.map((item) => {
             const tmp = item;
             tmp.zymc = `(${item.zydm}) ${item.zymc}`;
             tmp.tags = schoolTag(item.dwmc);

@@ -38,6 +38,9 @@ import AccurateSearch from '@/components/AccurateQuery.vue';
 import FuzzySearch from '@/components/FuzzyQuery.vue';
 import { ref } from 'vue';
 import router from '@/router/index';
+import ipcRenderer from '@/electron/ipcRenderer';
+
+ipcRenderer(this);
 
 export default {
   name: 'App',

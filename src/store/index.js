@@ -1,28 +1,17 @@
-import { createStore } from 'vuex';
+import Vuex from 'vuex';
+import state from './state';
+import mutations from './mutations';
+import saveToLocalStorage from './plugin/localStorage';
 
-export default createStore({
-  state: {
-    list: null,
-    favorities: null,
-  },
-  getters: {
-    getList(state) {
-      return state.list;
-    },
-    getFavorities(state) {
-      return state.favorities;
-    },
-  },
-  mutations: {
-    setList(state, list) {
-      state.list = list;
-    },
-    setFavorities(state, favorities) {
-      state.favorities = favorities;
-    },
-  },
-  actions: {
-  },
-  modules: {
-  },
-});
+const plugins = [saveToLocalStorage];
+
+const options = {
+  state,
+  mutations,
+  actions: {},
+  plugins,
+};
+
+const store = new Vuex.Store(options);
+
+export default store;
