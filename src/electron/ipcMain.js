@@ -10,4 +10,7 @@ export default function initIpcMain(win, store) {
     log('minimize');
     win.minimize();
   });
+
+  ipcMain.on('addToFavorities', (event, record) => {
+  })
 }

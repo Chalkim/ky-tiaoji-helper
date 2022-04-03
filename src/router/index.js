@@ -1,20 +1,21 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
+import DataView from '@/views/DataView.vue';
 
 const routes = [
   {
     path: '/',
     name: 'Data',
-    component: () => import('@/views/DataView.vue'),
+    component: DataView,
   },
   {
-    path: '/favorities',
-    name: 'Favorities',
-    component: () => import('@/views/FavoritiesView.vue'),
+    path: '/favorites',
+    name: 'Favorites',
+    component: () => import('@/views/FavoritesView.vue'),
   },
   {
-    path: '/blacklist',
-    name: 'Blacklist',
-    component: () => import('@/views/BlacklistView.vue'),
+    path: '/ignoreList',
+    name: 'IgnoreList',
+    component: () => import('@/views/IgnoreListView.vue'),
   },
 ];
 

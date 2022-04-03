@@ -1,10 +1,14 @@
 const localStorage = {
   settings: {
-    schoolType: [],
+    schoolType: {
+      s985: [],
+      s211: [],
+      ssyl: [],
+    },
   },
   data: {
-    favorities: [],
-    history: [],
+    favorites: [],
+    ignoreList: [],
   },
 };
 

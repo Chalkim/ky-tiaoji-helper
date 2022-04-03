@@ -1,14 +1,14 @@
 import Vuex from 'vuex';
 import state from './state';
 import mutations from './mutations';
+import actions from './actions';
 import saveToLocalStorage from './plugin/localStorage';
 
 const plugins = [saveToLocalStorage];
-
 const options = {
   state,
   mutations,
-  actions: {},
+  actions,
   plugins,
 };
 

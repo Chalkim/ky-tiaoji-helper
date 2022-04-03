@@ -63,6 +63,8 @@ class Background {
 
     this.window = new BrowserWindow(options);
 
+    this.window.maximize();
+
     // hide menu bar on Microsoft Windows and Linux
     this.window.setMenuBarVisibility(false);
 

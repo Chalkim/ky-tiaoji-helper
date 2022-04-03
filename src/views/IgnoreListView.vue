@@ -1,7 +1,7 @@
 <template>
   <a-table
     :columns="columns"
-    :data-source="this.queryResult"
+    :data-source="this.data.ignoreList"
     :pagination="{ pageSize: 20 }"
     :locale="{filterConfirm: '确定',
       filterReset: '重置',
@@ -45,34 +45,27 @@
       </template>
       <template v-else-if="column.key === 'id'">
         <span v-if="record.sfmzjybyq === ''">
-          <a-row justify="center">
-            <a-col :span="10">
+            <a-row justify="center">
+              <a-col :span="16">
               <a-button type="primary" @click="openURL('https://yz.chsi.com.cn/sytj/tjyx/tbtjzy.html?&id='+ record.id)">填报</a-button>
-            </a-col>
-            <a-col :span="7">
-              <a-button @click="handleAddFavorite(record)">
-                <StarOutlined />
+              </a-col>
+              <a-col :span="8">
+              <a-button danger @click="handleRemoveIgnore(record)">
+                <DeleteOutlined />
               </a-button>
-            </a-col>
-            <a-col :span="7">
-              <a-button @click="handleAddIgnore(record)">
-                <EyeInvisibleOutlined />
-              </a-button>
-            </a-col>
-          </a-row>
+              </a-col>
+            </a-row>
         </span>
         <span v-if="record.sfmzjybyq != ''">
           <a-row justify="center">
-            <a-col :span="1" />
-            <a-col :span="15">
+            <a-col :span="16">
               <a-typography-text>
                 {{ record.sfmzjybyq }}
               </a-typography-text>
             </a-col>
-            <a-col :span="1" />
-            <a-col :span="7">
-              <a-button @click="handleAddIgnore(record)">
-                <EyeInvisibleOutlined />
+            <a-col :span="8">
+              <a-button danger @click="handleRemoveIgnore(record)">
+                <DeleteOutlined />
               </a-button>
             </a-col>
           </a-row>
@@ -81,24 +74,25 @@
     </template>
   </a-table>
 </template>
+
 <script>
-import { computed, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { schoolFilter } from '@/utils/filter';
-import { StarOutlined, EyeInvisibleOutlined } from '@ant-design/icons-vue';
-import { deepClone } from '@/utils/data';
 import { mapState } from 'vuex';
+import { DeleteOutlined } from '@ant-design/icons-vue';
+import { deepClone } from '@/utils/data';
 import { message } from 'ant-design-vue';
 
-export default {
+export default defineComponent({
   components: {
-    StarOutlined,
-    EyeInvisibleOutlined,
+    DeleteOutlined,
   },
   computed: {
-    ...mapState(['queryResult']),
+    ...mapState(['data']),
   },
   setup() {
     const filteredInfo = ref();
+
     const columns = computed(() => {
       const filtered = filteredInfo.value || {};
       return [
@@ -118,14 +112,11 @@ export default {
             text: '双一流',
             value: 'ssyl',
           }, {
-            text: '研究所',
-            value: 'syjs',
-          }, {
             text: '兴趣',
             value: 'sxq',
           }],
           filteredValue: filtered.dwmc || null,
-          onFilter: (value, record) => schoolFilter(value, record.tags),
+          onFilter: (value, record) => schoolFilter(value, record.dwmc),
         },
         {
           title: '院系所',
@@ -198,59 +189,29 @@ export default {
       ];
     });
 
-    const handleChange = (pagination, filters) => {
+    const handleChange = (pagination, filters, sorter) => {
+      console.log('Various parameters', pagination, filters, sorter);
       filteredInfo.value = filters;
-    };
-
-    const openURL = (url) => {
-      window.open(url, '', 'width=1200, height=800');
     };
 
     return {
       columns,
       handleChange,
-      openURL,
     };
   },
   methods: {
-    refreshQueryResult() {
-      const fav = this.$store.state.data.favorites;
-      const favSet = new Set(fav.map((element) => element.id));
-      const ignore = this.$store.state.data.ignoreList;
-      const ignoreSet = new Set(ignore.map((element) => element.id));
-
-      this.$store.commit('setQueryResult', this.$store.state.originalQueryResult.filter(
-        (item) => !favSet.has(item.id) && !ignoreSet.has(item.id),
-      ));
+    openURL(url) {
+      window.open(url, '', 'width=1200, height=800');
     },
-    handleAddFavorite(record) {
+    handleRemoveIgnore(record) {
       const data = deepClone(record);
-      this.$store.dispatch('addFavorite', data).then(() => {
+      this.$store.dispatch('removeIgnore', data).then(() => {
         message.success({
-          content: '收藏成功！',
+          content: '删除成功！',
           duration: 1,
         });
-      }).catch(() => {
-        message.error({
-          content: '该记录已被收藏！',
-          duration: 1,
-        });
-      }).finally(() => this.refreshQueryResult());
-    },
-    handleAddIgnore(record) {
-      const data = deepClone(record);
-      this.$store.dispatch('addIgnore', data).then(() => {
-        message.success({
-          content: '已添加到忽略名单！',
-          duration: 1,
-        });
-      }).catch(() => {
-        message.error({
-          content: '该记录已被忽略！',
-          duration: 1,
-        });
-      }).finally(() => this.refreshQueryResult());
+      });
     },
   },
-};
+});
 </script>

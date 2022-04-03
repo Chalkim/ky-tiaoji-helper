@@ -1,8 +1,11 @@
 <template>
   <a-table
     :columns="columns"
-    :data-source="this.$store.state.favorities"
+    :data-source="this.data.favorites"
     :pagination="{ pageSize: 20 }"
+    :locale="{filterConfirm: '确定',
+      filterReset: '重置',
+    }"
     bordered
     size="middle"
     @change="handleChange"
@@ -13,13 +16,15 @@
           {{ record.dwmc }}
         </a-typography-link>
         <template v-if="record.tags.length != 0">
-          <a-divider dashed="true" style="margin: 5px 0"/>
+          <a-divider dashed style="margin: 5px 0"/>
           <a-tag
             v-for="tag in record.tags"
             :key="tag"
             :color="tag === '985' ? 'volcano' :
             tag === '211' ? 'geekblue' :
-            tag === '双一流' ? 'green' : 'purple'"
+            tag === '双一流' ? 'green' :
+            tag === '研究所' ? 'cyan' :
+            tag === '兴趣' ? 'purple' : 'blue'"
           >
             {{ tag }}
           </a-tag>
@@ -40,10 +45,30 @@
       </template>
       <template v-else-if="column.key === 'id'">
         <span v-if="record.sfmzjybyq === ''">
-          <a-button type="primary" @click="openURL('https://yz.chsi.com.cn/sytj/tjyx/tbtjzy.html?&id='+ record.id)">填报</a-button>
+          <a-row justify="center">
+            <a-col :span="16">
+            <a-button type="primary" @click="openURL('https://yz.chsi.com.cn/sytj/tjyx/tbtjzy.html?&id='+ record.id)">填报</a-button>
+            </a-col>
+            <a-col :span="8">
+            <a-button danger @click="handleRemoveFavorite(record)">
+              <DeleteOutlined />
+            </a-button>
+            </a-col>
+          </a-row>
         </span>
-        <span v-if="record.sfmzjybyq != ''">
-          {{ record.sfmzjybyq }}
+        <span v-if="record.sfmzjybyq !== ''">
+          <a-row justify="center">
+            <a-col :span="16">
+              <a-typography-text>
+                {{ record.sfmzjybyq }}
+              </a-typography-text>
+            </a-col>
+            <a-col :span="8">
+              <a-button danger @click="handleRemoveFavorite(record)">
+                <DeleteOutlined />
+              </a-button>
+            </a-col>
+          </a-row>
         </span>
       </template>
     </template>
@@ -53,9 +78,17 @@
 <script>
 import { computed, defineComponent, ref } from 'vue';
 import { schoolFilter } from '@/utils/filter';
+import { mapState } from 'vuex';
+import { DeleteOutlined } from '@ant-design/icons-vue';
+import { deepClone } from '@/utils/data';
+import { message } from 'ant-design-vue';
 
 export default defineComponent({
   components: {
+    DeleteOutlined,
+  },
+  computed: {
+    ...mapState(['data']),
   },
   setup() {
     const filteredInfo = ref();
@@ -151,7 +184,7 @@ export default defineComponent({
           key: 'id',
           dataIndex: 'id',
           align: 'center',
-          width: 90,
+          width: 175,
         },
       ];
     });
@@ -169,6 +202,15 @@ export default defineComponent({
   methods: {
     openURL(url) {
       window.open(url, '', 'width=1200, height=800');
+    },
+    handleRemoveFavorite(record) {
+      const data = deepClone(record);
+      this.$store.dispatch('removeFavorite', data).then(() => {
+        message.success({
+          content: '删除成功！',
+          duration: 1,
+        });
+      });
     },
   },
 });

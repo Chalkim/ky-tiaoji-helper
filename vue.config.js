@@ -1,6 +1,13 @@
 const { defineConfig } = require('@vue/cli-service');
 
 module.exports = defineConfig({
+  pluginOptions: {
+    electronBuilder: {
+      builderOptions: {
+        "productName": "考研调剂助手",
+      },
+    },
+  },
 //   devServer: {
 //     proxy: {
 //         '^/api': {

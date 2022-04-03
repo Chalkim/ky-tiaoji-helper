@@ -1,4 +1,5 @@
 <template>
+  <a-back-top />
   <a-row justify="center">
     <a-col :span="24">
       <a-tabs
@@ -18,8 +19,8 @@
           </div>
           <a-divider style="margin: 0 0 20px 0"/>
         </a-tab-pane>
-        <a-tab-pane key="Favorities" tab="收藏夹" />
-        <a-tab-pane key="Blacklist" tab="黑名单" />
+        <a-tab-pane key="Favorites" tab="收藏夹" />
+        <a-tab-pane key="IgnoreList" tab="已忽略" />
         <template #rightExtra>
           <a-button @click="handleLogin" style="margin: 0 2px 0 0">登录</a-button>
         </template>
@@ -66,15 +67,15 @@ export default {
           });
           break;
         }
-        case 'Favorities': {
+        case 'Favorites': {
           router.push({
-            name: 'Favorities',
+            name: 'Favorites',
           });
           break;
         }
-        case 'Blacklist': {
+        case 'IgnoreList': {
           router.push({
-            name: 'Blacklist',
+            name: 'IgnoreList',
           });
           break;
         }

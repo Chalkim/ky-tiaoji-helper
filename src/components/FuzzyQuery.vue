@@ -83,12 +83,19 @@ export default defineComponent({
               list.push(vos[i]);
             }
           });
-          this.$store.commit('setQueryResult', list.map((item) => {
+
+          const fav = this.$store.state.data.favorites;
+          const favSet = new Set(fav.map((element) => element.id));
+          const ignore = this.$store.state.data.ignoreList;
+          const ignoreSet = new Set(ignore.map((element) => element.id));
+
+          this.$store.commit('setOriginalQueryResult', list.map((item) => {
             const tmp = item;
             tmp.zymc = `(${item.zydm}) ${item.zymc}`;
             tmp.tags = schoolTag(item.dwmc);
             return tmp;
-          }));
+          }).filter((item) => !favSet.has(item.id) && !ignoreSet.has(item.id)));
+          this.$store.commit('setQueryResult', this.$store.state.originalQueryResult);
         }).then(() => {
           message.success({
             content: '查询成功！',
