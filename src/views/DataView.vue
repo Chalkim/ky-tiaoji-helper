@@ -34,7 +34,9 @@
         <template v-if="record.bz !== ''">
           <a-popover title="备注" :overlayStyle="{maxWidth:'250px'}">
             <template #content>
+              <a-typography-text>
               {{ record.bz }}
+              </a-typography-text>
             </template>
             <a-button>备注</a-button>
           </a-popover>
@@ -193,7 +195,7 @@ export default {
           key: 'id',
           dataIndex: 'id',
           align: 'center',
-          width: 175,
+          width: 200,
         },
       ];
     });

@@ -4,7 +4,22 @@ module.exports = defineConfig({
   pluginOptions: {
     electronBuilder: {
       builderOptions: {
-        "productName": "考研调剂助手",
+        productName: "考研调剂助手",
+        nsis: {
+          oneClick: false,
+          allowToChangeInstallationDirectory: true,
+        },
+        win: {
+          target: [
+            {
+              target: "nsis",
+              arch: [
+                "x64", 
+                "ia32"
+              ]
+            }
+          ]
+        },
       },
     },
   },

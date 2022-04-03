@@ -81,12 +81,17 @@ export default {
               list.push(vos[i]);
             }
           });
-          this.$store.commit('setQueryResult', list.map((item) => {
-            const tmp = item;
-            tmp.zymc = `(${item.zydm}) ${item.zymc}`;
-            tmp.tags = schoolTag(item.dwmc);
-            return tmp;
-          }));
+          this.$store.commit(
+            'setQueryResult',
+            list
+              .filter((item) => item.sfmzjybyq === '')
+              .map((item) => {
+                const tmp = item;
+                tmp.zymc = `(${item.zydm}) ${item.zymc}`;
+                tmp.tags = schoolTag(item.dwmc);
+                return tmp;
+              }),
+          );
         });
       });
     },

@@ -94,7 +94,9 @@ export default defineComponent({
             tmp.zymc = `(${item.zydm}) ${item.zymc}`;
             tmp.tags = schoolTag(item.dwmc);
             return tmp;
-          }).filter((item) => !favSet.has(item.id) && !ignoreSet.has(item.id)));
+          }).filter((item) => !favSet.has(item.id) && !ignoreSet.has(item.id))
+            .filter((item) => item.sfmzjybyq === ''));
+
           this.$store.commit('setQueryResult', this.$store.state.originalQueryResult);
         }).then(() => {
           message.success({
