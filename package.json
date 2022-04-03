@@ -44,5 +44,16 @@
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
-  }
+  },
+  "description": "考研调剂助手，祝各位考生早日上岸",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chalkim/ky-tiaoji-helper.git"
+  },
+  "author": "Chalkim",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Chalkim/ky-tiaoji-helper/issues"
+  },
+  "homepage": "https://github.com/Chalkim/ky-tiaoji-helper#readme"
 }
