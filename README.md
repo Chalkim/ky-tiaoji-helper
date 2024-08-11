@@ -4,6 +4,10 @@
 
 Graduate School Adjustment Assistant - Helping all candidates achieve success.
 
+> 软件仅在调剂开放期间内可使用。考虑开发需要调剂考生的账号进行登录，维护难度较大，该项目不再维护。
+>
+> The software is only available during the adjustment period. Considering the need for adjustment candidates to log in with specific accounts, which increases maintenance difficulty, this project will no longer be maintained.
+
 📦️[下载安装包](https://github.com/Chalkim/ky-tiaoji-helper/releases)
 
 ## 使用 / Usage
