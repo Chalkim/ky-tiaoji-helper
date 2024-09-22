@@ -2,7 +2,7 @@
 
 考研调剂助手，祝各位考生早日上岸
 
-Graduate School Adjustment Assistant - Helping all candidates achieve success.
+Postgraduate Transfer Assistant - Helping all candidates achieve success.
 
 > 软件仅在调剂开放期间内可使用。考虑开发需要调剂考生的账号进行登录，维护难度较大，该项目不再维护。
 >
